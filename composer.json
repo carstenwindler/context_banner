@@ -1,0 +1,69 @@
+{
+  "name": "carstenwindler/context_banner",
+  "type": "typo3-cms-extension",
+  "description": "Adds a small Banner in both FE and BE and changes title tag to easier distinct development, testing and production context",
+  "keywords": [
+    "TYPO3",
+    "extension",
+    "banner",
+    "context"
+  ],
+  "homepage": "https://carstenwindler.de",
+  "authors": [
+    {
+      "name": "Carsten Windler",
+      "email": "carsten@carstenwindler.de",
+      "role": "Developer",
+      "homepage": "https://carstenwindler.de"
+    }
+  ],
+  "license": "GPL-2.0+",
+  "require": {
+    "php": ">=7.0.0",
+    "typo3/cms-core": "^8.7 || ^9 || dev-master"
+  },
+  "require-dev": {
+    "mikey179/vfsStream": "^1.6",
+    "phpunit/phpunit": "^7",
+    "squizlabs/php_codesniffer": "^3",
+    "nimut/testing-framework": "^4.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "CarstenWindler\\ContextBanner\\": "Classes"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "CarstenWindler\\ContextBanner\\Tests\\": "Tests"
+    }
+  },
+  "replace": {
+    "cwenvbanner": "self.version",
+    "typo3-ter/cwenvbanner": "self.version"
+  },
+  "config": {
+    "vendor-dir": ".Build/vendor"
+  },
+  "scripts": {
+    "link-extension": [
+      "@php -r 'is_dir($extFolder=__DIR__.\"/.Build/public/typo3conf/ext/\") || mkdir($extFolder, 0777, true);'",
+      "@php -r 'file_exists($extFolder=__DIR__.\"/.Build/public/typo3conf/ext/context_banner\") || symlink(__DIR__,$extFolder);'"
+    ],
+    "post-autoload-dump": [
+      "@link-extension"
+    ]
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    },
+    "typo3/cms": {
+      "extension-key": "context_banner",
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": ".Build/public"
+    }
+  }
+}
+
+

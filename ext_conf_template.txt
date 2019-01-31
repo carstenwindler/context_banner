@@ -1,0 +1,34 @@
+# customsubcategory=banner=LLL:EXT:context_banner/locallang.xml:Banner
+# customsubcategory=frontend=LLL:EXT:context_banner/locallang.xml:Frontend
+# customsubcategory=backend=LLL:EXT:context_banner/locallang.xml:Backend
+# customsubcategory=pagetitle=LLL:EXT:context_banner/locallang.xml:Pagetitle
+
+# cat=pagetitle/1; type=input; label=Pagetitle template:Simple templating for the page title (Available markers: sitename, context)
+pageTitleTemplate = ###context### - ###sitename###
+
+# cat=banner/1; type=input; label=Banner template:Simple templating for the banner text (Available markers: sitename, context)
+bannerTemplate = ###context###
+
+# cat=banner/2; type=options[Automatic=auto,Use Custom CSS=custom]; label=Banner Style:Automatic (by Application Context) or custom
+bannerStyle = auto
+
+# cat=banner/3; type=input; label=Custom Banner CSS:The CSS used for both FE & BE banners, if "Use Custom CSS" is selected for "Banner Style"
+bannerCssCustom = z-index: 1000000; position: fixed; top: 0px; left: 0px; border: 5px #FF0000 solid; background: #FF0000; colour: #FFFFFF;
+
+# cat=banner/4; type=input; label=Development Banner CSS:The CSS used for both FE & BE banners
+bannerCssDevelopment = z-index: 1000000; position: fixed; top: 0px; left: 0px; padding: 6px; background: #00FF00; colour: #000000;
+
+# cat=banner/5; type=input; label=Testing Banner CSS:The CSS used for both FE & BE banners
+bannerCssTesting = z-index: 1000000; position: fixed; top: 0px; left: 0px; padding: 6px; background: #FFFF00; colour: #000000;
+
+# cat=banner/6; type=input; label=Production Banner CSS:The CSS used for both FE & BE banners
+bannerCssProduction = z-index: 1000000; position: fixed; top: 0px; left: 0px; padding: 6px; background: #FF0000; colour: #000000;
+
+# cat=backend/1; type=boolean; label=Hide Backend banner:By default Backend banner is shown on all application contexts
+hideBackendBanner = 0
+
+# cat=frontend/1; type=boolean; label=Show Frontend banner on Production:By default Frontend banner is NOT shown on Production context
+showFrontendBannerOnProduction = 0
+
+# cat=frontend/2; type=boolean; label=Hide Frontend banner:By default Frontend banner hidden on Production (see showFrontendBannerOnProduction)
+hideFrontendBanner = 0

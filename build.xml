@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Setup Typo3" default="build" basedir=".">
+    <!-- property name="TYPO3_VERSION" value="^6.2.0" /-->
+    <property name="TYPO3_VERSION" value="^7.6.0" />
+
+    <target name="build">
+        <!-- Increase Composers default Timeout, because Typo3 has a lot of files, so this can eventually
+             take longer on slower systems -->
+        <exec executable="export" passthru="true">
+            <arg line="COMPOSER_PROCESS_TIMEOUT=1200" />
+        </exec>
+
+        <exec executable="composer" passthru="true">
+            <arg value="require"/>
+            <arg value="typo3/cms=${TYPO3_VERSION}"/>
+        </exec>
+
+        <!-- Revert composer.json (the used Typo3 version should not be in the composer.json) -->
+        <exec executable="git" passthru="true">
+            <arg value="checkout"/>
+            <arg value="composer.json"/>
+        </exec>
+    </target>
+</project>
