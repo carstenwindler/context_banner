@@ -8,6 +8,7 @@
     "banner",
     "context"
   ],
+  "version": "1.0.0",
   "homepage": "https://carstenwindler.de",
   "authors": [
     {
@@ -23,8 +24,6 @@
     "typo3/cms-core": "^8.7 || ^9 || dev-master"
   },
   "require-dev": {
-    "mikey179/vfsStream": "^1.6",
-    "phpunit/phpunit": "^7",
     "squizlabs/php_codesniffer": "^3",
     "nimut/testing-framework": "^4.0"
   },
@@ -37,10 +36,6 @@
     "psr-4": {
       "CarstenWindler\\ContextBanner\\Tests\\": "Tests"
     }
-  },
-  "replace": {
-    "cwenvbanner": "self.version",
-    "typo3-ter/cwenvbanner": "self.version"
   },
   "config": {
     "vendor-dir": ".Build/vendor"

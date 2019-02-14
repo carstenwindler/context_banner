@@ -1,6 +1,5 @@
 # customsubcategory=banner=LLL:EXT:context_banner/locallang.xml:Banner
 # customsubcategory=frontend=LLL:EXT:context_banner/locallang.xml:Frontend
-# customsubcategory=backend=LLL:EXT:context_banner/locallang.xml:Backend
 # customsubcategory=pagetitle=LLL:EXT:context_banner/locallang.xml:Pagetitle
 
 # cat=pagetitle/1; type=input; label=Pagetitle template:Simple templating for the page title (Available markers: sitename, context)
@@ -24,11 +23,5 @@ bannerCssTesting = z-index: 1000000; position: fixed; top: 0px; left: 0px; paddi
 # cat=banner/6; type=input; label=Production Banner CSS:The CSS used for both FE & BE banners
 bannerCssProduction = z-index: 1000000; position: fixed; top: 0px; left: 0px; padding: 6px; background: #FF0000; colour: #000000;
 
-# cat=backend/1; type=boolean; label=Hide Backend banner:By default Backend banner is shown on all application contexts
-hideBackendBanner = 0
-
 # cat=frontend/1; type=boolean; label=Show Frontend banner on Production:By default Frontend banner is NOT shown on Production context
-showFrontendBannerOnProduction = 0
-
-# cat=frontend/2; type=boolean; label=Hide Frontend banner:By default Frontend banner hidden on Production (see showFrontendBannerOnProduction)
-hideFrontendBanner = 0
+showBannerOnProduction = 0

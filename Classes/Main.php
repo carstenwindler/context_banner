@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace CarstenWindler\ContextBanner;
 
@@ -15,6 +15,7 @@ namespace CarstenWindler\ContextBanner;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Authentication\BackendUserAuthentication;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -22,13 +23,15 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  *
  * @author Carsten Windler <carsten@carstenwindler.de>
  */
-class Renderer
+class Main
 {
+    const EXT_KEY = 'context_banner';
+
     /**
      * Extension key
      * @var string
      */
-    private $extKey = 'context_banner';
+    private $extKey = self::EXT_KEY;
 
     /**
      * Extension configuration
@@ -42,10 +45,24 @@ class Renderer
      */
     private $contextName;
 
+    /**
+     * @var array
+     */
+    private $toolbarIconBackgroundColors = [
+        'Development' => '#00FF00',
+        'Testing' => '#FFFF00',
+        'Production' => '#FF0000'
+    ];
+
     public function __construct()
     {
         if (isset($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey])) {
-            $this->setConf(unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey]));
+            $this->setConf(
+                unserialize(
+                    $GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey],
+                    [ 'allowed_classes' => false ]
+                )
+            );
         }
 
         $this->contextName = (string) GeneralUtility::getApplicationContext();
@@ -69,11 +86,6 @@ class Renderer
             $this->conf['showFrontendBannerOnProduction'] === 1);
     }
 
-    private function shouldHideBackendBanner(): bool
-    {
-        return (isset($this->conf['hideBackendBanner']) && $this->conf['hideBackendBanner'] === 1);
-    }
-
     public function isFrontendBannerShown(): bool
     {
         if ($this->contextName === 'Production' && !$this->shouldFrontendBannerBeShownOnProduction()) {
@@ -83,9 +95,14 @@ class Renderer
         return !$this->shouldHideFrontendBanner();
     }
 
-    public function isBackendBannerShown(): bool
+    protected function getBackendUser(): BackendUserAuthentication
     {
-        return !$this->shouldHideBackendBanner();
+        return $GLOBALS['BE_USER'];
+    }
+
+    public function isToolbarItemShown(): bool
+    {
+        return $this->getBackendUser()->isAdmin();
     }
 
     /**
@@ -120,28 +137,9 @@ class Renderer
     /**
      * Hooked into backendRenderPreProcess
      */
-    public function backendRenderPreProcessHook(array &$params)
+    public function backendRenderPreProcessHook()
     {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] = $this->getBannerText();
-    }
-
-    /**
-     * Hooked into backendRenderPreProcess
-     */
-    public function backendRenderPostProcessHook(array &$params)
-    {
-        if (!$this->isBackendBannerShown()) {
-            return;
-        }
-
-        $outputArray = array();
-        preg_match('/<body[^<]*>/', $params['content'], $outputArray);
-
-        // We expect the first occurance of <body> to be the correct one
-        // there should be only one anyway
-        $bodyTag = array_shift($outputArray);
-
-        $params['content'] = str_replace($bodyTag, $bodyTag . $this->renderBackendBanner(), $params['content']);
     }
 
     private function getInlineCss(): string
@@ -177,20 +175,16 @@ class Renderer
         );
     }
 
-    private function renderBanner(): string
+    public function renderFrontendBanner(): string
     {
         return '<div class="contextbanner" style="' . $this->getInlineCss() . '">' . $this->getBannerText() . '</div>';
     }
 
-    public function renderBackendBanner(): string
+    public function renderToolbarItem(): string
     {
-        // right now, both banners are the same
-        return $this->renderBanner();
-    }
+        $backgroundColor  = $this->toolbarIconBackgroundColors[$this->contextName] ?? '';
 
-    public function renderFrontendBanner(): string
-    {
-        // right now, both banners are the same
-        return $this->renderBanner();
+        return '<span style="color: #000000; background-color: ' . $backgroundColor .
+            '" class="toolbar-item-link" title="Application context">' . strtoupper($this->contextName) . '</span>';
     }
 }

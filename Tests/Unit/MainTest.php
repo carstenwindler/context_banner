@@ -1,15 +1,15 @@
 <?php
 
-use CarstenWindler\ContextBanner\Renderer;
+use CarstenWindler\ContextBanner\Main;
 use Nimut\TestingFramework\TestCase\UnitTestCase;
 
 /**
- * @covers \CarstenWindler\ContextBanner\Renderer
+ * @covers \CarstenWindler\ContextBanner\Main
  */
-class RendererTest extends UnitTestCase
+class MainTest extends UnitTestCase
 {
     /**
-     * @var Renderer
+     * @var Main
      */
     private $sut;
 
@@ -32,7 +32,6 @@ class RendererTest extends UnitTestCase
             'bannerCssDevelopment' => 'development',
             'bannerCssTesting' => 'testing',
             'bannerCssProduction' => 'production',
-            'hideBackendBanner' => '0',
             'showFrontendBannerOnProduction' => '0',
             'hideFrontendBanner' => '0',
         ];
@@ -47,7 +46,7 @@ class RendererTest extends UnitTestCase
 
     private function prepareDefaultSut()
     {
-        $this->sut = new Renderer();
+        $this->sut = new Main();
         $this->sut->setConf($this->defaultConfiguration);
     }
 
@@ -139,36 +138,5 @@ class RendererTest extends UnitTestCase
             '<body><div class="contextbanner" style="custom">Development</div><div id="someotherdiv"></div></body>',
             $GLOBALS['TSFE']->content
         );
-    }
-
-    /**
-     * @test
-     * @dataProvider backendBannerProvider
-     */
-    public function showBackendBanner($context, $bannerHtml)
-    {
-        $this->setApplicationContext($context);
-
-        $this->prepareDefaultSut();
-
-        $params = [
-            'content' => '<body><div id="someotherdiv"></div></body>'
-        ];
-
-        $this->sut->backendRenderPostProcessHook($params);
-
-        $this->assertEquals(
-            $bannerHtml,
-            $params['content']
-        );
-    }
-
-    public function backendBannerProvider()
-    {
-        return [
-            [ 'Development', '<body><div class="contextbanner" style="development">Development</div><div id="someotherdiv"></div></body>' ],
-            [ 'Testing', '<body><div class="contextbanner" style="testing">Testing</div><div id="someotherdiv"></div></body>' ],
-            [ 'Production', '<body><div class="contextbanner" style="production">Production</div><div id="someotherdiv"></div></body>' ],
-        ];
     }
 }
