@@ -57,4 +57,4 @@ script:
   - >
     echo;
     echo "Running code sniffer";
-    .Build/bin/phpcs --standard=PSR2 Classes
+    .Build/vendor/bin/phpcs --standard=PSR2 Classes
