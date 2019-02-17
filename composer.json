@@ -8,7 +8,6 @@
     "banner",
     "context"
   ],
-  "version": "1.0.0",
   "homepage": "https://carstenwindler.de",
   "authors": [
     {
@@ -21,7 +20,7 @@
   "license": "GPL-2.0+",
   "require": {
     "php": ">=7.0.0",
-    "typo3/cms-core": "^8.7 || ^9 || dev-master"
+    "typo3/cms-core": "^8.7 || ^9"
   },
   "require-dev": {
     "squizlabs/php_codesniffer": "^3",
