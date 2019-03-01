@@ -1,13 +1,5 @@
 language: php
 
-php:
-  - 7.1
-  - 7.2
-
-env:
-  - TYPO3_VERSION="^8.7.0"
-  - TYPO3_VERSION="^9.5.0"
-
 notifications:
   email:
     - carsten@carstenwindler.de
@@ -30,7 +22,17 @@ before_install:
   - if [ "$GITHUB_COMPOSER_AUTH" ]; then composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH; fi
 
 before_script:
-  - composer require typo3/cms="$TYPO3_VERSION"
+  - |
+    composer require \
+      typo3/cms-backend="$TYPO3_VERSION" \
+      typo3/cms-core="$TYPO3_VERSION" \
+      typo3/cms-extbase="$TYPO3_VERSION" \
+      typo3/cms-extensionmanager="$TYPO3_VERSION" \
+      typo3/cms-fluid="$TYPO3_VERSION" \
+      typo3/cms-frontend="$TYPO3_VERSION" \
+      typo3/cms-install="$TYPO3_VERSION" \
+      typo3/cms-scheduler="$TYPO3_VERSION" \
+      typo3/cms-recordlist="$TYPO3_VERSION" \
   # Restore composer.json
   - git checkout composer.json
   - export TYPO3_PATH_WEB=$PWD/.Build/Web
@@ -58,3 +60,14 @@ script:
     echo;
     echo "Running code sniffer";
     .Build/vendor/bin/phpcs --standard=PSR2 Classes
+
+jobs:
+  allow_failures:
+    - env: TYPO3_VERSION="dev-master"
+  include:
+    - stage: test
+      php: 7.2
+      env: TYPO3_VERSION=^8.7.22
+    - stage: test
+      php: 7.1
+      env: TYPO3_VERSION=^8.7.22

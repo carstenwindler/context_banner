@@ -75,15 +75,10 @@ class Main
         return $this;
     }
 
-    private function shouldHideFrontendBanner(): bool
-    {
-        return (isset($this->conf['hideFrontendBanner']) && $this->conf['hideFrontendBanner'] === 1);
-    }
-
     private function shouldFrontendBannerBeShownOnProduction(): bool
     {
-        return (isset($this->conf['showFrontendBannerOnProduction']) &&
-            $this->conf['showFrontendBannerOnProduction'] === 1);
+        return (isset($this->conf['showBannerOnProduction']) &&
+            $this->conf['showBannerOnProduction'] === 1);
     }
 
     public function isFrontendBannerShown(): bool
@@ -92,7 +87,7 @@ class Main
             return false;
         }
 
-        return !$this->shouldHideFrontendBanner();
+        return true;
     }
 
     protected function getBackendUser(): BackendUserAuthentication

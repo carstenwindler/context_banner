@@ -32,8 +32,7 @@ class MainTest extends UnitTestCase
             'bannerCssDevelopment' => 'development',
             'bannerCssTesting' => 'testing',
             'bannerCssProduction' => 'production',
-            'showFrontendBannerOnProduction' => '0',
-            'hideFrontendBanner' => '0',
+            'showBannerOnProduction' => '0',
         ];
     }
 
@@ -73,7 +72,7 @@ class MainTest extends UnitTestCase
         $this->prepareDefaultSut();
         $this->sut->setConf(array_merge(
             $this->defaultConfiguration,
-            array('showFrontendBannerOnProduction' => 1)
+            array('showBannerOnProduction' => 1)
         ));
 
         $params = array('pObj' => $GLOBALS['TSFE']);
