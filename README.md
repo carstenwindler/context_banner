@@ -35,3 +35,7 @@ The following options can be configured:
 To run the test:
 
 ```.Build/vendor/bin/phpunit -c Tests/Build/UnitTests.xml```
+
+Code Sniffer
+
+```.Build/vendor/bin/phpcs --standard=PSR2 Classes```
