@@ -1,4 +1,4 @@
-[![Latest Stable Version](https://poser.pugx.org/carstenwindler/cwhtmlcompressor/version)](https://packagist.org/packages/carstenwindler/cwhtmlcompressor)
+[![Latest Stable Version](https://poser.pugx.org/carstenwindler/context_banner/version)](https://packagist.org/packages/carstenwindler/context_banner)
 [![Build Status](https://api.travis-ci.org/carstenwindler/context_banner.svg?branch=master)](https://travis-ci.org/carstenwindler/cwenvbanner)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/carstenwindler/context_banner/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/carstenwindler/context_banner/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/carstenwindler/context_banner/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/carstenwindler/context_banner/?branch=master)
