@@ -41,7 +41,7 @@ script:
   - >
     echo;
     echo "Running unit tests";
-    .Build/vendor/bin/phpunit --coverage-clover .Build/clover.xml -c Tests/Build/UnitTests.xml
+    .Build/vendor/bin/phpunit --coverage-text --coverage-clover=coverage.clover -c Tests/Build/UnitTests.xml
 
   - >
     echo;
@@ -71,3 +71,7 @@ jobs:
     - stage: test
       php: 7.1
       env: TYPO3_VERSION=^8.7.22
+
+after_success:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover

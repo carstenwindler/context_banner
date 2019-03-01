@@ -1,3 +1,4 @@
 .Build/*
 .idea
 composer.lock
+coverage.clover
