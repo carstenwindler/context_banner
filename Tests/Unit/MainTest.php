@@ -138,4 +138,30 @@ class MainTest extends UnitTestCase
             $GLOBALS['TSFE']->content
         );
     }
+
+    /**
+     * @test
+     */
+    public function changesBackendPageTitle()
+    {
+        $this->setApplicationContext('Development');
+
+        $this->prepareDefaultSut();
+
+        $this->sut->backendRenderPreProcessHook();
+
+        $this->assertEquals(
+            'DEV - TYPO3',
+            $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename']
+        );
+    }
+
+    public function backendTitleProvider()
+    {
+        return [
+            [ 'Development', 'DEV - TYPO3' ],
+            [ 'Testing', 'TEST - TYPO3' ],
+            [ 'Production', 'PROD - TYPO3' ],
+        ];
+    }
 }

@@ -54,6 +54,15 @@ class Main
         'Production' => '#FF0000'
     ];
 
+    /**
+     * @var array
+     */
+    private $shortContextNames = [
+        'Development' => 'DEV',
+        'Testing' => 'TEST',
+        'Production' => 'PROD'
+    ];
+
     public function __construct()
     {
         if (isset($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf'][$this->extKey])) {
@@ -134,7 +143,7 @@ class Main
      */
     public function backendRenderPreProcessHook()
     {
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] = $this->getBannerText();
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'] = $this->getPageTitle();
     }
 
     private function getInlineCss(): string
@@ -167,6 +176,26 @@ class Main
             [ '###sitename###', '###context###' ],
             [ $siteName, $this->contextName ],
             $this->conf['bannerTemplate']
+        );
+    }
+
+    private function getShortContextName(): string
+    {
+        if (!isset($this->shortContextNames[$this->contextName])) {
+            return strtoupper(substr($this->contextName, 0, 3));
+        }
+
+        return $this->shortContextNames[$this->contextName];
+    }
+
+    private function getPageTitle(): string
+    {
+        $siteName = $GLOBALS['TYPO3_CONF_VARS']['SYS']['sitename'];
+
+        return str_replace(
+            [ '###sitename###', '###context###' ],
+            [ $siteName, $this->getShortContextName() ],
+            $this->conf['pageTitleTemplate']
         );
     }
 

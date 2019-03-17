@@ -11,5 +11,9 @@ if (TYPO3_MODE === 'BE') {
         'context_banner'
     );
 
-    $GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][] = \CarstenWindler\ContextBanner\Backend\ToolbarItems\ApplicationContextToolbarItem::class;
+    $GLOBALS['TYPO3_CONF_VARS']['BE']['toolbarItems'][]
+        = \CarstenWindler\ContextBanner\Backend\ToolbarItems\ApplicationContextToolbarItem::class;
+
+    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['typo3/backend.php']['renderPreProcess']['context_banner']
+        = \CarstenWindler\ContextBanner\Main::class . '->backendRenderPreProcessHook';
 }
